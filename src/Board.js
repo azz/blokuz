@@ -1,6 +1,8 @@
 import React from 'react';
+import Tile from './Tile';
+import shapes from './shapes';
 
-export class Board extends React.Component {
+export default class Board extends React.Component {
   onClick(id) {
     if (this.isActive(id)) {
       this.props.moves.clickCell(id);
@@ -26,18 +28,17 @@ export class Board extends React.Component {
     }
 
     const cellStyle = {
+      boxSizing: 'border-box',
       border: '1px solid #555',
-      width: '50px',
-      height: '50px',
-      lineHeight: '50px',
-      textAlign: 'center',
+      width: '24px',
+      height: '24px',
     };
 
     let tbody = [];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 20; i++) {
       let cells = [];
-      for (let j = 0; j < 3; j++) {
-        const id = 3 * i + j;
+      for (let j = 0; j < 20; j++) {
+        const id = 20 * i + j;
         cells.push(
           <td style={cellStyle} key={id} onClick={() => this.onClick(id)}>
             {this.props.G.cells[id]}
@@ -48,10 +49,24 @@ export class Board extends React.Component {
     }
 
     return (
-      <div>
+      <div style={{ display: 'flex' }}>
         <table id="board">
           <tbody>{tbody}</tbody>
         </table>
+        <div
+          style={{ display: 'flex', flexFlow: 'row wrap', maxWidth: '300px' }}
+        >
+          {shapes.map(shape => (
+            <div
+              style={{
+                display: 'block',
+                padding: '4px',
+              }}
+            >
+              <Tile pattern={shape} color="red" />
+            </div>
+          ))}
+        </div>
         {winner}
       </div>
     );
