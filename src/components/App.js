@@ -1,22 +1,27 @@
 import React from 'react';
-import { Client } from 'boardgame.io/react';
-import { DndProvider } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { Client, Lobby } from 'boardgame.io/react';
 
 import game from '../game';
 import Layout from './Layout';
 
+const isSolo = window.location.search.substring(1) === 'solo';
+
 const GameClient = Client({
-  numPlayers: game.numPlayers,
+  numPlayers: 4,
   game,
   board: Layout,
+  debug: process.env.NODE_ENV !== 'production',
 });
 
 const App = () => {
-  return (
-    <DndProvider backend={HTML5Backend}>
-      <GameClient />
-    </DndProvider>
+  return isSolo ? (
+    <GameClient />
+  ) : (
+    <Lobby
+      gameServer={window.location.origin.replace(':3000', ':8000')}
+      lobbyServer={window.location.origin}
+      gameComponents={[{ game, board: Layout }]}
+    />
   );
 };
 

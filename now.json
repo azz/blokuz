@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "name": "let-me-in",
+  "alias": "let-me-in",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/static-build",
+      "config": { "distDir": "build" }
+    },
+    { "src": "api/*.js", "use": "@now/node-server" }
+  ],
+  "routes": [
+    { "src": "/socket.io/(.*)", "dest": "/api/index.js" },
+    { "src": "/(.*)", "dest": "/build/index.html" }
+  ]
+}

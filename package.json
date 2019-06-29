@@ -1,20 +1,22 @@
 {
-  "name": "blokus",
+  "name": "let-me-in",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "boardgame.io": "^0.32.0",
+    "esm": "^3.2.25",
     "react": "^16.8.6",
     "react-dnd": "^8.0.3",
     "react-dnd-html5-backend": "^8.0.3",
+    "react-dnd-touch-backend": "^0.8.3",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1"
   },
+  "proxy": "http://localhost:8000",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "./scripts/start.sh",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app"

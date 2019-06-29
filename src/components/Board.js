@@ -1,14 +1,15 @@
-import React, { memo } from 'react';
+import React, { memo, useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import Cell from './Cell';
 import { snapToGrid } from '../snap';
 import colors from '../colors';
 import { isValidMove } from '../logic';
 
-function getCell(G, monitor) {
+function getCell(G, boardRef, monitor) {
+  let { top, left } = boardRef.current.getBoundingClientRect();
   const { x, y } = monitor.getSourceClientOffset();
-  let left = Math.round(x);
-  let top = Math.round(y);
+  left = Math.round(x - left);
+  top = Math.round(y - top);
   [left, top] = snapToGrid(left, top);
   left /= 26;
   top /= 26;
@@ -17,21 +18,18 @@ function getCell(G, monitor) {
 }
 
 const Board = ({ G, ctx, moves, events }) => {
+  const boardRef = useRef();
   const [, drop] = useDrop({
     accept: 'Tile',
     canDrop: (tile, monitor) => {
-      const cell = getCell(G, monitor);
+      const cell = getCell(G, boardRef, monitor);
       return isValidMove(G, ctx, { cell, tile });
     },
     drop: (tile, monitor) => {
-      const cell = getCell(G, monitor);
+      const cell = getCell(G, boardRef, monitor);
       moves.place({ cell, tile });
       events.endTurn();
     },
-    // collect: monitor => ({
-    //   canDrop: monitor.canDrop(),
-    //   isOver: monitor.isOver(),
-    // }),
   });
 
   const cells = Array(G.gameSize * G.gameSize)
@@ -39,16 +37,18 @@ const Board = ({ G, ctx, moves, events }) => {
     .map((cell, i) => <Cell key={i} color={colors[G.cells[i]]} />);
 
   return (
-    <div
-      ref={drop}
-      style={{
-        display: 'grid',
-        gridTemplateColumns: `repeat(${G.gameSize}, 24px)`,
-        gridTemplateRows: `repeat(${G.gameSize}, 24px)`,
-        gridGap: '2px',
-      }}
-    >
-      {cells}
+    <div ref={drop}>
+      <div
+        ref={boardRef}
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${G.gameSize}, 24px)`,
+          gridTemplateRows: `repeat(${G.gameSize}, 24px)`,
+          gridGap: '2px',
+        }}
+      >
+        {cells}
+      </div>
     </div>
   );
 };

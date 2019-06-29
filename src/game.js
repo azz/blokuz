@@ -2,10 +2,12 @@ import { Game } from 'boardgame.io/core';
 import { fillCells } from './logic';
 
 const GAME_SIZE = 20;
-const NUM_PLAYERS = 4;
 
 export default Game({
-  numPlayers: NUM_PLAYERS,
+  name: 'Let me in!',
+
+  minPlayers: 4,
+  maxPlayers: 4,
 
   setup: () => {
     const state = {
@@ -13,7 +15,7 @@ export default Game({
       cells: Array(GAME_SIZE * GAME_SIZE).fill(null),
       tilesUsed: {},
     };
-    for (let i = 0; i < NUM_PLAYERS; i++) {
+    for (let i = 0; i < 4; i++) {
       state.tilesUsed[i] = [];
     }
 
