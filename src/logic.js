@@ -1,8 +1,16 @@
 export function isValidMove(G, ctx, { cell, tile }) {
   return (
+    isOnBoard(G, ctx, { cell, tile }) &&
     spacesAvailable(G, ctx, { cell, tile }) &&
     noAdjacentOwn(G, ctx, { cell, tile }) &&
     isConnected(G, ctx, { cell, tile })
+  );
+}
+
+function isOnBoard(G, ctx, { cell, tile }) {
+  return (
+    Math.floor(cell / G.gameSize) + tile.pattern.length <= G.gameSize &&
+    (cell % G.gameSize) + tile.pattern[0].length <= G.gameSize
   );
 }
 
@@ -42,6 +50,7 @@ function noAdjacentOwn(G, ctx, { cell, tile }) {
         ctx.currentPlayer
       ) {
         isValid = false;
+        break;
       }
     }
   });
@@ -50,18 +59,20 @@ function noAdjacentOwn(G, ctx, { cell, tile }) {
 
 function isConnected(G, ctx, { cell, tile }) {
   // first turn, must place in your corner.
-  if (!ctx.tilesUsed[ctx.currentPlayer].length) {
+  if (!G.tilesUsed[ctx.currentPlayer].length) {
     // TODO:
+    return true;
   }
 
-  let isValid = true;
+  let isValid = false;
   iteratePattern(tile, (x, y) => {
     for (const neighbour of adjacentNeighbours) {
       if (
         G.cells[cell + toAbsolute(G, x + neighbour.dx, y + neighbour.dy)] ===
         ctx.currentPlayer
       ) {
-        isValid = false;
+        isValid = true;
+        break;
       }
     }
   });
