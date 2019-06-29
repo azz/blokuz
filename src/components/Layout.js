@@ -3,12 +3,12 @@ import PlayerTiles from './PlayerTiles';
 import Board from './Board';
 import DragLayer from './DragLayer';
 
-const Layout = () => {
+const Layout = props => {
   return (
     <div style={{ display: 'flex' }}>
       <DragLayer />
-      <Board />
-      <PlayerTiles color={'red'} />
+      <Board {...props} />
+      <PlayerTiles {...props} />
     </div>
   );
 };

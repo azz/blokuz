@@ -13,6 +13,7 @@ const DraggableTile = props => {
 
   useEffect(() => {
     preview(getEmptyImage(), { captureDraggingState: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <Tile {...props} dragRef={dragRef} isDragging={isDragging} />;

@@ -23,7 +23,7 @@ function getItemStyles(initialOffset, currentOffset) {
   let { x, y } = currentOffset;
   [x, y] = snapToGrid(x, y);
 
-  const transform = `translate(${x + 2}px, ${y + 2}px)`;
+  const transform = `translate(${x}px, ${y}px)`;
   return {
     transform,
     WebkitTransform: transform,
