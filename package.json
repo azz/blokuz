@@ -5,6 +5,7 @@
   "dependencies": {
     "boardgame.io": "^0.32.0",
     "esm": "^3.2.25",
+    "koa-static": "^5.0.0",
     "react": "^16.8.6",
     "react-dnd": "^8.0.3",
     "react-dnd-html5-backend": "^8.0.3",
