@@ -10,7 +10,7 @@ const server = Server({
   db: process.env.MONGODB_URI
     ? new Mongo({
         url: process.env.MONGODB_URI,
-        dbname: 'game',
+        dbname: process.env.MONGODB_DATABASE,
       })
     : undefined,
 });
