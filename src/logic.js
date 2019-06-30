@@ -47,7 +47,7 @@ function noAdjacentOwn(G, ctx, { cell, tile }) {
     for (const neighbour of directNeighbours) {
       if (
         G.cells[cell + toAbsolute(G, x + neighbour.dx, y + neighbour.dy)] ===
-        ctx.currentPlayer
+        String(ctx.turn % 4)
       ) {
         isValid = false;
         break;
@@ -59,7 +59,7 @@ function noAdjacentOwn(G, ctx, { cell, tile }) {
 
 function isConnected(G, ctx, { cell, tile }) {
   // first turn, must place in your corner.
-  if (!G.tilesUsed[ctx.currentPlayer].length) {
+  if (ctx.turn < 4) {
     // TODO:
     return true;
   }
@@ -69,7 +69,7 @@ function isConnected(G, ctx, { cell, tile }) {
     for (const neighbour of adjacentNeighbours) {
       if (
         G.cells[cell + toAbsolute(G, x + neighbour.dx, y + neighbour.dy)] ===
-        ctx.currentPlayer
+        String(ctx.turn % 4)
       ) {
         isValid = true;
         break;
@@ -81,7 +81,7 @@ function isConnected(G, ctx, { cell, tile }) {
 
 export function fillCells(G, ctx, { cell, tile }) {
   iteratePattern(tile, (x, y) => {
-    G.cells[cell + toAbsolute(G, x, y)] = ctx.currentPlayer;
+    G.cells[cell + toAbsolute(G, x, y)] = String(ctx.turn % 4);
   });
 }
 

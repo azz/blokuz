@@ -1,9 +1,9 @@
 import serve from 'koa-static';
 import { Server } from 'boardgame.io/server';
-import game from '../src/game';
+import { twoPlayer, fourPlayer } from '../src/game';
 
 const server = Server({
-  games: [game],
+  games: [twoPlayer, fourPlayer],
 
   // db: new DbConnector(),
 });

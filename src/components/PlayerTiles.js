@@ -9,27 +9,35 @@ import { transform } from '../logic';
 const PlayerTiles = ({ G, ctx, playerID }) => {
   const isSolo = typeof playerID !== 'string';
   const [selectedPlayerID, selectPlayer] = useState(
-    isSolo ? ctx.currentPlayer : playerID,
+    isSolo ? ctx.turn % 4 : playerID,
   );
   return (
     <div style={{ width: '410px', flexGrow: '1' }}>
-      <div>
+      <section style={{ margin: '0 24px' }}>
         {isSolo ? null : (
           <span>
             You are playing as{' '}
             <strong style={{ color: colors[playerID] }}>
               {colors[playerID]}
             </strong>
+            {ctx.numPlayers === 2 ? (
+              <>
+                <em> and </em>
+                <strong style={{ color: colors[Number(playerID) + 2] }}>
+                  {colors[Number(playerID) + 2]}
+                </strong>
+              </>
+            ) : null}
             .
           </span>
         )}{' '}
         <span>
           It is{' '}
-          <strong style={{ color: colors[ctx.currentPlayer] }}>
+          <strong style={{ color: colors[ctx.turn % 4] }}>
             {ctx.currentPlayer === playerID ? (
               <em>your</em>
             ) : (
-              colors[ctx.currentPlayer] + "'s"
+              colors[ctx.turn % 4] + "'s"
             )}
           </strong>{' '}
           turn.
@@ -47,7 +55,7 @@ const PlayerTiles = ({ G, ctx, playerID }) => {
             </button>
           ))}
         </p>
-      </div>
+      </section>
       <TilesForPlayer G={G} ctx={ctx} playerID={selectedPlayerID} />
     </div>
   );
@@ -62,7 +70,7 @@ const TilesForPlayer = ({ G, playerID, ctx }) => {
 
   return (
     <div>
-      <section style={{ padding: '0 24px' }}>
+      <section style={{ margin: '0 24px' }}>
         <button onClick={() => setIsFlippedX(!isFlippedX)}>↔ Flip</button>
         <button onClick={() => setIsFlippedY(!isFlippedY)}>↕ Flip</button>
         <button onClick={() => setOrientation((orientation + 1) % 4)}>
@@ -74,7 +82,7 @@ const TilesForPlayer = ({ G, playerID, ctx }) => {
           .filter(([key]) => !G.tilesUsed[playerID].includes(key))
           .map(([key, pattern]) => (
             <div key={key} style={{ padding: '13px' }}>
-              {ctx.currentPlayer === playerID ? (
+              {String(ctx.turn % 4) === playerID ? (
                 <DraggableTile
                   name={key}
                   pattern={transform(pattern, {

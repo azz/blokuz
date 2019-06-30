@@ -2,8 +2,8 @@ import React, { memo, useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import Cell from './Cell';
 import { snapToGrid } from '../snap';
-import colors from '../colors';
 import { isValidMove } from '../logic';
+import colors from '../colors';
 
 function getCell(G, boardRef, monitor) {
   let { top, left } = boardRef.current.getBoundingClientRect();
