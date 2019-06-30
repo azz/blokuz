@@ -42,6 +42,7 @@ const Board = ({ G, ctx, moves, events }) => {
         ref={boardRef}
         style={{
           display: 'grid',
+          background: '#eee',
           gridTemplateColumns: `repeat(${G.gameSize}, 24px)`,
           gridTemplateRows: `repeat(${G.gameSize}, 24px)`,
           gridGap: '2px',

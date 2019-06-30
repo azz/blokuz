@@ -4,7 +4,7 @@ import { fillCells } from './logic';
 const GAME_SIZE = 20;
 
 export default Game({
-  name: 'Let me in!',
+  name: '4-player',
 
   minPlayers: 4,
   maxPlayers: 4,

@@ -16,7 +16,14 @@ const DraggableTile = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <Tile {...props} dragRef={dragRef} isDragging={isDragging} />;
+  return (
+    <Tile
+      {...props}
+      dragRef={dragRef}
+      isDragging={isDragging}
+      isDraggable={true}
+    />
+  );
 };
 
 export default DraggableTile;

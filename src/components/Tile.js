@@ -1,11 +1,11 @@
 import React, { memo } from 'react';
 
-const Tile = ({ dragRef, isDragging, pattern, color }) => {
+const Tile = ({ dragRef, isDragging, isDraggable, pattern, color }) => {
   return (
     <div
       ref={dragRef}
       style={{
-        cursor: 'pointer',
+        cursor: isDraggable ? 'grab' : 'not-allowed',
         display: 'grid',
         gridTemplateRows: `repeat(${pattern.length}, 24px)`,
         gridTemplateColumns: `repeat(${pattern[0].length}, 24px)`,
