@@ -60,8 +60,24 @@ function noAdjacentOwn(G, ctx, { cell, tile }) {
 function isConnected(G, ctx, { cell, tile }) {
   // first turn, must place in your corner.
   if (ctx.turn < 4) {
-    // TODO:
-    return true;
+    let target;
+    switch (ctx.turn) {
+      case 0:
+        target = 0; // top-left (red)
+        break;
+      case 1:
+        target = G.gameSize - 1; // top-right (orange)
+        break;
+      case 2:
+        target = G.gameSize ** 2 - 1; // bottom-right (green)
+        break;
+      case 3:
+        target = G.gameSize ** 2 - G.gameSize; // bottom-left (blue)
+        break;
+      default:
+        return false;
+    }
+    return hasIntersection(G, ctx, { cell, tile, target });
   }
 
   let isValid = false;
@@ -83,6 +99,16 @@ export function fillCells(G, ctx, { cell, tile }) {
   iteratePattern(tile, (x, y) => {
     G.cells[cell + toAbsolute(G, x, y)] = String(ctx.turn % 4);
   });
+}
+
+function hasIntersection(G, ctx, { cell, tile, target }) {
+  let intersects = false;
+  iteratePattern(tile, (x, y) => {
+    if (cell + toAbsolute(G, x, y) === target) {
+      intersects = true;
+    }
+  });
+  return intersects;
 }
 
 function iteratePattern(tile, callback) {

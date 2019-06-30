@@ -17,6 +17,13 @@ function getCell(G, boardRef, monitor) {
   return top * G.gameSize + left;
 }
 
+const initialCells = {
+  0: '#ff000080',
+  19: '#ff9c0080',
+  380: '#0000ff80',
+  399: '#00990080',
+};
+
 const Board = ({ G, ctx, moves, events }) => {
   const boardRef = useRef();
   const [, drop] = useDrop({
@@ -34,7 +41,9 @@ const Board = ({ G, ctx, moves, events }) => {
 
   const cells = Array(G.gameSize * G.gameSize)
     .fill(null)
-    .map((cell, i) => <Cell key={i} color={colors[G.cells[i]]} />);
+    .map((cell, i) => (
+      <Cell key={i} color={colors[G.cells[i]] || initialCells[i]} />
+    ));
 
   return (
     <div ref={drop}>
