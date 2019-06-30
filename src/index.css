@@ -14,7 +14,7 @@ code {
 
 /* boardgame.io root element for the actual game */
 .bgio-client {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   background: white;

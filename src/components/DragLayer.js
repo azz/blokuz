@@ -15,13 +15,11 @@ const layerStyles = {
 
 function getItemStyles(initialOffset, currentOffset) {
   if (!initialOffset || !currentOffset) {
-    return {
-      display: 'none',
-    };
+    return { display: 'none' };
   }
 
   let { x, y } = currentOffset;
-  [x, y] = snapToGrid(x, y);
+  [x, y] = snapToGrid(x, y, true);
 
   const transform = `translate(${x}px, ${y}px)`;
   return {

@@ -4,6 +4,7 @@ import DraggableTile from './DraggableTile';
 import Tile from './Tile';
 import shapes from '../shapes';
 import colors from '../colors';
+import { transform } from '../logic';
 
 const PlayerTiles = ({ G, ctx, playerID }) => {
   const isSolo = typeof playerID !== 'string';
@@ -11,7 +12,7 @@ const PlayerTiles = ({ G, ctx, playerID }) => {
     isSolo ? ctx.currentPlayer : playerID,
   );
   return (
-    <div>
+    <div style={{ width: '410px', flexGrow: '1' }}>
       <div>
         {isSolo ? null : (
           <span>
@@ -53,27 +54,50 @@ const PlayerTiles = ({ G, ctx, playerID }) => {
 };
 
 const TilesForPlayer = ({ G, playerID, ctx }) => {
+  const [orientation, setOrientation] = useState(0);
+  const [isFlippedX, setIsFlippedX] = useState(false);
+  const [isFlippedY, setIsFlippedY] = useState(false);
+
   const color = colors[playerID];
 
   return (
-    <div style={{ display: 'flex', flexFlow: 'row wrap', maxWidth: '300px' }}>
-      {Object.entries(shapes)
-        .filter(([key]) => !G.tilesUsed[playerID].includes(key))
-        .map(([key, pattern]) => (
-          <div
-            key={key}
-            style={{
-              display: 'block',
-              padding: '4px',
-            }}
-          >
-            {ctx.currentPlayer === playerID ? (
-              <DraggableTile name={key} pattern={pattern} color={color} />
-            ) : (
-              <Tile name={key} pattern={pattern} color={color} />
-            )}
-          </div>
-        ))}
+    <div>
+      <section style={{ padding: '0 24px' }}>
+        <button onClick={() => setIsFlippedX(!isFlippedX)}>↔ Flip</button>
+        <button onClick={() => setIsFlippedY(!isFlippedY)}>↕ Flip</button>
+        <button onClick={() => setOrientation((orientation + 1) % 4)}>
+          ↻ Rotate
+        </button>
+      </section>
+      <section style={{ display: 'flex', flexFlow: 'row wrap' }}>
+        {Object.entries(shapes)
+          .filter(([key]) => !G.tilesUsed[playerID].includes(key))
+          .map(([key, pattern]) => (
+            <div key={key} style={{ padding: '13px' }}>
+              {ctx.currentPlayer === playerID ? (
+                <DraggableTile
+                  name={key}
+                  pattern={transform(pattern, {
+                    isFlippedX,
+                    isFlippedY,
+                    orientation,
+                  })}
+                  color={color}
+                />
+              ) : (
+                <Tile
+                  name={key}
+                  pattern={transform(pattern, {
+                    isFlippedX,
+                    isFlippedY,
+                    orientation,
+                  })}
+                  color={color}
+                />
+              )}
+            </div>
+          ))}
+      </section>
     </div>
   );
 };

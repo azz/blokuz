@@ -1,15 +1,30 @@
 // prettier-ignore
 const SHAPES = {
-  DOT: ['X'],
 
-  DOUBLE: ['XX'],
+  PLUS: [' X ',
+         'XXX',
+         ' X '],
+  
+  RAINBOW: [' XX',
+            'XX ',
+            'X  '],
+  
+  FIRST: [' XX',
+          'XX ',
+          ' X '],
 
-  TRIO: ['XXX'],
-
-  QUAD: ['XXXX'],
-
-  QUIN: ['XXXXX'],
-
+  BEST: ['XXX',
+         'X  ',
+         'X  '],
+        
+  T_POSE: ['XXX',
+          ' X ',
+          ' X '],
+  
+  ZIG: [' XX',
+        ' X ',
+        'XX '],
+   
   BOX: ['XX', 
         'XX'],
 
@@ -34,35 +49,21 @@ const SHAPES = {
   CHUNGUS: ['XXX',
             'X X'],
   
-  BEST: ['XXX',
-         'X  ',
-         'X  '],
-  
-  T_POSE: ['XXX',
-           ' X ',
-           ' X '],
-  
-  ZIG: [' XX',
-        ' X ',
-         'XX '],
-  
   T: ['XXX',
       ' X '],
   
   S: [' XX',
       'XX '],
   
-  PLUS: [' X ',
-         'XXX',
-         ' X '],
-  
-  RAINBOW: [' XX',
-            'XX ',
-            'X  '],
-  
-  FIRST: [' XX',
-          'XX ',
-          ' X '],
+  DOT: ['X'],
+
+  DOUBLE: ['XX'],
+
+  TRIO: ['XXX'],
+
+  QUAD: ['XXXX'],
+
+  QUIN: ['XXXXX'],
 };
 
 export default SHAPES;

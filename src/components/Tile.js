@@ -7,6 +7,7 @@ const Tile = ({ dragRef, isDragging, isDraggable, pattern, color }) => {
       style={{
         cursor: isDraggable ? 'grab' : 'not-allowed',
         display: 'grid',
+        minWidth: '78px',
         gridTemplateRows: `repeat(${pattern.length}, 24px)`,
         gridTemplateColumns: `repeat(${pattern[0].length}, 24px)`,
         gridAutoFlow: 'row',

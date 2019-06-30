@@ -94,3 +94,22 @@ function iteratePattern(tile, callback) {
     }
   }
 }
+
+export function transform(pattern, { isFlippedX, isFlippedY, orientation }) {
+  let result = pattern.map(p => p.split(''));
+
+  const transpose = (col, i) =>
+    result.map(row => row[row.length - i - 1]).reverse();
+
+  for (let i = 0; i < orientation; i++) {
+    result = result[0].map(transpose).reverse();
+  }
+  if (isFlippedX) {
+    result = result.map(row => row.reverse());
+  }
+  if (isFlippedY) {
+    result.reverse();
+  }
+
+  return result.map(line => line.join(''));
+}
