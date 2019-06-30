@@ -6,7 +6,7 @@ import shapes from '../shapes';
 import colors from '../colors';
 import { transform } from '../logic';
 
-const PlayerTiles = ({ G, ctx, playerID }) => {
+const PlayerTiles = ({ G, ctx, playerID, events }) => {
   const isSolo = typeof playerID !== 'string';
   const [selectedPlayerID, selectPlayer] = useState(
     isSolo ? ctx.turn % 4 : playerID,
@@ -56,12 +56,17 @@ const PlayerTiles = ({ G, ctx, playerID }) => {
           ))}
         </p>
       </section>
-      <TilesForPlayer G={G} ctx={ctx} playerID={selectedPlayerID} />
+      <TilesForPlayer
+        G={G}
+        ctx={ctx}
+        events={events}
+        playerID={selectedPlayerID}
+      />
     </div>
   );
 };
 
-const TilesForPlayer = ({ G, playerID, ctx }) => {
+const TilesForPlayer = ({ G, playerID, ctx, events }) => {
   const [orientation, setOrientation] = useState(0);
   const [isFlippedX, setIsFlippedX] = useState(false);
   const [isFlippedY, setIsFlippedY] = useState(false);
@@ -75,6 +80,13 @@ const TilesForPlayer = ({ G, playerID, ctx }) => {
         <button onClick={() => setIsFlippedY(!isFlippedY)}>↕ Flip</button>
         <button onClick={() => setOrientation((orientation + 1) % 4)}>
           ↻ Rotate
+        </button>
+        {' · '}
+        <button
+          disabled={ctx.turn < 4 || String(ctx.turn % 4) !== playerID}
+          onClick={() => events.endTurn()}
+        >
+          Skip Turn
         </button>
       </section>
       <section style={{ display: 'flex', flexFlow: 'row wrap' }}>
