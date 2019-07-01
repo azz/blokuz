@@ -1,7 +1,6 @@
 import { Game } from 'boardgame.io/core';
-import { fillCells } from './logic';
-
-const GAME_SIZE = 20;
+import { fillCells, consumeTile } from './logic';
+import setup from './setup';
 
 const makeGame = players =>
   Game({
@@ -10,23 +9,12 @@ const makeGame = players =>
     minPlayers: players,
     maxPlayers: players,
 
-    setup: () => {
-      const state = {
-        gameSize: GAME_SIZE,
-        cells: Array(GAME_SIZE * GAME_SIZE).fill(null),
-        tilesUsed: {},
-      };
-      for (let i = 0; i < 4; i++) {
-        state.tilesUsed[i] = [];
-      }
-
-      return state;
-    },
+    setup,
 
     moves: {
       place(G, ctx, { cell, tile }) {
         fillCells(G, ctx, { cell, tile });
-        G.tilesUsed[ctx.turn % 4].push(tile.name);
+        consumeTile(G, ctx, { tile });
       },
     },
   });

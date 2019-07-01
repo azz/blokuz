@@ -1,4 +1,5 @@
 // prettier-ignore
+/* istanbul ignore next */
 const SHAPES = {
 
   PLUS: [' X ',

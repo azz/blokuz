@@ -74,6 +74,7 @@ function isConnected(G, ctx, { cell, tile }) {
       case 3:
         target = G.gameSize ** 2 - G.gameSize; // bottom-left (blue)
         break;
+      /* istanbul ignore next */
       default:
         return false;
     }
@@ -99,6 +100,10 @@ export function fillCells(G, ctx, { cell, tile }) {
   iteratePattern(tile, (x, y) => {
     G.cells[cell + toAbsolute(G, x, y)] = String(ctx.turn % 4);
   });
+}
+
+export function consumeTile(G, ctx, { tile }) {
+  G.tilesUsed[ctx.turn % 4].push(tile.name);
 }
 
 function hasIntersection(G, ctx, { cell, tile, target }) {
