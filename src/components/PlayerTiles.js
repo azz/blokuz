@@ -31,17 +31,36 @@ const PlayerTiles = ({ G, ctx, playerID, events }) => {
             .
           </span>
         )}{' '}
-        <span>
-          It is{' '}
-          <strong style={{ color: colors[ctx.turn % 4] }}>
-            {ctx.currentPlayer === playerID ? (
-              <em>your</em>
-            ) : (
-              colors[ctx.turn % 4] + "'s"
-            )}
-          </strong>{' '}
-          turn.
-        </span>
+        {ctx.gameover ? (
+          <span>
+            Game Over!{' '}
+            <strong style={{ color: colors[ctx.gameover[0].player] }}>
+              {colors[ctx.gameover[0].player]} wins!
+            </strong>
+            <ol>
+              {ctx.gameover.map(({ player, points }) => (
+                <li key={player}>
+                  <strong style={{ color: colors[player] }}>
+                    {colors[player]}
+                  </strong>
+                  : {points} remaining
+                </li>
+              ))}
+            </ol>
+          </span>
+        ) : (
+          <span>
+            It is{' '}
+            <strong style={{ color: colors[ctx.turn % 4] }}>
+              {ctx.currentPlayer === playerID ? (
+                <em>your</em>
+              ) : (
+                colors[ctx.turn % 4] + "'s"
+              )}
+            </strong>{' '}
+            turn.
+          </span>
+        )}
         <p>
           {' '}
           Players:{' '}

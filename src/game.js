@@ -1,5 +1,5 @@
 import { Game } from 'boardgame.io/core';
-import { fillCells, consumeTile } from './logic';
+import { fillCells, consumeTile, isGameOver } from './logic';
 import setup from './setup';
 
 const makeGame = players =>
@@ -16,6 +16,11 @@ const makeGame = players =>
         fillCells(G, ctx, { cell, tile });
         consumeTile(G, ctx, { tile });
       },
+    },
+
+    flow: {
+      movesPerTurn: 1,
+      endGameIf: isGameOver,
     },
   });
 

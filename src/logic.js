@@ -1,3 +1,5 @@
+import SHAPES from './shapes';
+
 export function isValidMove(G, ctx, { cell, tile }) {
   return (
     isOnBoard(G, ctx, { cell, tile }) &&
@@ -85,6 +87,12 @@ function isConnected(G, ctx, { cell, tile }) {
   iteratePattern(tile, (x, y) => {
     for (const neighbour of adjacentNeighbours) {
       if (
+        ((cell + x) % G.gameSize === G.gameSize - 1 && neighbour.dx < 0) ||
+        ((cell + x) % G.gameSize === 0 && neighbour.dx > 0)
+      ) {
+        break;
+      }
+      if (
         G.cells[cell + toAbsolute(G, x + neighbour.dx, y + neighbour.dy)] ===
         String(ctx.turn % 4)
       ) {
@@ -143,4 +151,71 @@ export function transform(pattern, { isFlippedX, isFlippedY, orientation }) {
   }
 
   return result.map(line => line.join(''));
+}
+
+export function getPossibleMoves(G, ctx) {
+  const moves = [];
+
+  const availableShapes = Object.entries(SHAPES).filter(
+    ([key]) => !G.tilesUsed[ctx.turn % 4].includes(key),
+  );
+
+  for (let cell = 0; cell < G.cells.length; cell++) {
+    if (G.cells[cell]) continue;
+
+    for (const [name, pattern] of availableShapes) {
+      for (let orientation = 0; orientation < 4; orientation++) {
+        for (const isFlippedX of [true, false]) {
+          const tile = {
+            name,
+            pattern: transform(pattern, { isFlippedX, orientation }),
+          };
+          if (isValidMove(G, ctx, { cell, tile })) {
+            moves.push({
+              move: 'place',
+              args: [{ cell, tile }],
+            });
+          }
+        }
+      }
+    }
+  }
+
+  return moves;
+}
+
+export function isGameOver(G, ctx) {
+  let moves = [];
+  for (let i = 0; i < 4; i++) {
+    moves.push(...getPossibleMoves(G, { ...ctx, turn: ctx.turn + i }));
+  }
+
+  if (moves.length === 0) {
+    return getScores(G, ctx);
+  }
+}
+
+function getScore(G, ctx, { player }) {
+  const shapesRemaining = Object.entries(SHAPES).filter(
+    ([key]) => !G.tilesUsed[player].includes(key),
+  );
+  const shapePoints = shapesRemaining.reduce(
+    (total, [key, pattern]) =>
+      total + pattern.join('').replace(/ /g, '').length,
+    0,
+  );
+  return shapePoints;
+}
+
+export function getScores(G, ctx) {
+  const scores = [];
+
+  for (let i = 0; i < ctx.numPlayers; i++) {
+    const points = getScore(G, ctx, { player: i });
+    scores.push({ player: i, points });
+  }
+
+  scores.sort((a, b) => a.points - b.points);
+
+  return scores;
 }

@@ -1,4 +1,5 @@
 const GAME_SIZE = 20;
+// const GAME_SIZE = 7;
 
 export default () => {
   const state = {

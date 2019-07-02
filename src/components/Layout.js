@@ -8,7 +8,6 @@ import TouchBackend from 'react-dnd-touch-backend';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 const Layout = props => {
-  debugger;
   return (
     <DndProvider backend={isTouchDevice() ? TouchBackend : HTML5Backend}>
       <div style={{ display: 'flex', flexFlow: 'row wrap', width: '100vw' }}>

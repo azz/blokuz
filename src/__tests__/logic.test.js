@@ -156,6 +156,23 @@ describe('isValidMove()', () => {
         ),
       ).toEqual(true);
     });
+
+    test("doesn't wrap to other side of board rightwards", () => {
+      const G = setup();
+      G.cells[0] = '0';
+      G.cells[20] = '0';
+      expect(
+        isValidMove(G, { turn: 4 }, { cell: 39, tile: { pattern: ['X'] } }),
+      ).toEqual(false);
+    });
+
+    test("doesn't wrap to other side of board leftwards", () => {
+      const G = setup();
+      G.cells[19] = '1';
+      expect(
+        isValidMove(G, { turn: 5 }, { cell: 0, tile: { pattern: ['X'] } }),
+      ).toEqual(false);
+    });
   });
 });
 
