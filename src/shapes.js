@@ -19,8 +19,8 @@ const SHAPES = {
          'X  '],
         
   T_POSE: ['XXX',
-          ' X ',
-          ' X '],
+           ' X ',
+           ' X '],
   
   ZIG: [' XX',
         ' X ',
