@@ -61,19 +61,19 @@ function noAdjacentOwn(G, ctx, { cell, tile }) {
 
 function isConnected(G, ctx, { cell, tile }) {
   // first turn, must place in your corner.
-  if (ctx.turn < 4) {
+  if (ctx.turn <= 4) {
     let target;
     switch (ctx.turn) {
-      case 0:
+      case 1:
         target = 0; // top-left (red)
         break;
-      case 1:
+      case 2:
         target = G.gameSize - 1; // top-right (orange)
         break;
-      case 2:
+      case 3:
         target = G.gameSize ** 2 - 1; // bottom-right (green)
         break;
-      case 3:
+      case 4:
         target = G.gameSize ** 2 - G.gameSize; // bottom-left (blue)
         break;
       /* istanbul ignore next */
@@ -157,7 +157,7 @@ export function getPossibleMoves(G, ctx) {
   const moves = [];
 
   const availableShapes = Object.entries(SHAPES).filter(
-    ([key]) => !G.tilesUsed[ctx.turn % 4].includes(key),
+    ([key]) => !G.tilesUsed[ctx.turn % 4].includes(key)
   );
 
   for (let cell = 0; cell < G.cells.length; cell++) {
@@ -197,12 +197,12 @@ export function isGameOver(G, ctx) {
 
 function getScore(G, ctx, { player }) {
   const shapesRemaining = Object.entries(SHAPES).filter(
-    ([key]) => !G.tilesUsed[player].includes(key),
+    ([key]) => !G.tilesUsed[player].includes(key)
   );
   const shapePoints = shapesRemaining.reduce(
     (total, [key, pattern]) =>
       total + pattern.join('').replace(/ /g, '').length,
-    0,
+    0
   );
   return shapePoints;
 }

@@ -2,7 +2,6 @@ import React from 'react';
 import { Client, Lobby } from 'boardgame.io/react';
 
 import { twoPlayer, fourPlayer } from '../game';
-import ai from '../ai';
 import Layout from './Layout';
 
 const isSolo = window.location.search.substring(1) === 'solo';
@@ -12,7 +11,6 @@ const GameClient = Client({
   game: twoPlayer,
   board: Layout,
   debug: process.env.NODE_ENV !== 'production',
-  ai,
 });
 
 const App = () => {

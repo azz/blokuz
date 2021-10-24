@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { Fragment, memo } from 'react';
 
 const Tile = ({ dragRef, isDragging, isDraggable, pattern, color }) => {
   return (
@@ -16,12 +16,11 @@ const Tile = ({ dragRef, isDragging, isDraggable, pattern, color }) => {
       }}
     >
       {pattern.map((row, rowKey) => (
-        <>
+        <Fragment key={rowKey}>
           {row.split('').map((col, colKey) => (
             <div
               key={colKey}
               style={{
-                // display: 'inline-block',
                 height: '100%',
                 width: '100%',
                 borderRadius: '2px',
@@ -29,7 +28,7 @@ const Tile = ({ dragRef, isDragging, isDraggable, pattern, color }) => {
               }}
             />
           ))}
-        </>
+        </Fragment>
       ))}
     </div>
   );

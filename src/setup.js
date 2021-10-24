@@ -1,7 +1,7 @@
 const GAME_SIZE = 20;
 // const GAME_SIZE = 7;
 
-export default () => {
+export default function setup() {
   const state = {
     gameSize: GAME_SIZE,
     cells: Array(GAME_SIZE * GAME_SIZE).fill(null),
@@ -13,4 +13,4 @@ export default () => {
   }
 
   return state;
-};
+}

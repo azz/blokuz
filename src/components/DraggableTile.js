@@ -5,7 +5,8 @@ import { getEmptyImage } from 'react-dnd-html5-backend';
 
 const DraggableTile = props => {
   const [{ isDragging }, dragRef, preview] = useDrag({
-    item: { type: 'Tile', ...props },
+    type: 'Tile',
+    item: props,
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
     }),
