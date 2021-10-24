@@ -2,12 +2,12 @@ import { Game } from 'boardgame.io/core';
 import { fillCells, consumeTile, isGameOver } from './logic';
 import setup from './setup';
 
-const makeGame = players =>
+const makeGame = playerCount =>
   Game({
-    name: `${players}-player`,
+    name: `${playerCount}-player`,
 
-    minPlayers: players,
-    maxPlayers: players,
+    minPlayers: playerCount,
+    maxPlayers: playerCount,
 
     setup,
 
