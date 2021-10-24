@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-distracting-elements */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DraggableTile from './DraggableTile';
 import Tile from './Tile';
 import shapes from '../shapes';
@@ -9,8 +9,15 @@ import { transform } from '../logic';
 const PlayerTiles = ({ G, ctx, playerID, events }) => {
   const isSolo = typeof playerID !== 'string';
   const [selectedPlayerID, selectPlayer] = useState(
-    isSolo ? ctx.turn % 4 : playerID,
+    isSolo ? (ctx.turn % 4).toString() : playerID
   );
+
+  useEffect(() => {
+    if (isSolo || ctx.currentPlayer === playerID) {
+      selectPlayer((ctx.turn % 4).toString());
+    }
+  }, [isSolo, ctx.currentPlayer, ctx.turn, playerID]);
+
   return (
     <div style={{ width: '410px', flexGrow: '1' }}>
       <section style={{ margin: '0 24px' }}>
