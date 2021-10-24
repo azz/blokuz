@@ -1,3 +1,3 @@
 /* istanbul ignore next */
-const colors = ['red', 'orange', 'green', 'blue'];
+const colors = ['blue', 'red', 'orange', 'green'];
 export default colors;

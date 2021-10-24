@@ -1,7 +1,8 @@
-import { AI, RandomBot } from 'boardgame.io/ai';
+import { RandomBot } from 'boardgame.io/ai';
 import { getPossibleMoves } from './logic';
 
-export default AI({
+const AI = {
   bot: RandomBot,
   enumerate: getPossibleMoves,
-});
+};
+export default AI;

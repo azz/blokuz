@@ -4,8 +4,8 @@ import Board from './Board';
 import DragLayer from './DragLayer';
 
 import { DndProvider } from 'react-dnd';
-import TouchBackend from 'react-dnd-touch-backend';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { TouchBackend } from 'react-dnd-touch-backend';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const Layout = props => {
   return (

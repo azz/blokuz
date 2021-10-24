@@ -7,6 +7,7 @@ import { transform } from '../logic';
 
 const PlayerTiles = ({ G, ctx, playerID, events }) => {
   const isSolo = typeof playerID !== 'string';
+  console.log(ctx.currentPlayer, playerID, ctx.turn);
   const [selectedPlayerID, selectPlayer] = useState(
     isSolo ? (ctx.turn % 4).toString() : playerID
   );
@@ -23,14 +24,14 @@ const PlayerTiles = ({ G, ctx, playerID, events }) => {
         {isSolo ? null : (
           <span>
             You are playing as{' '}
-            <strong style={{ color: colors[playerID] }}>
-              {colors[playerID]}
+            <strong style={{ color: colors[(Number(playerID) + 1) % 4] }}>
+              {colors[(Number(playerID) + 1) % 4]}
             </strong>
             {ctx.numPlayers === 2 ? (
               <>
                 <em> and </em>
-                <strong style={{ color: colors[Number(playerID) + 2] }}>
-                  {colors[Number(playerID) + 2]}
+                <strong style={{ color: colors[(Number(playerID) + 3) % 4] }}>
+                  {colors[(Number(playerID) + 3) % 4]}
                 </strong>
               </>
             ) : null}
