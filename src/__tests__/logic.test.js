@@ -7,7 +7,7 @@ describe('isValidMove()', () => {
       expect(
         isValidMove(
           setup(),
-          { turn: 0 },
+          { turn: 1 },
           { cell: 0, tile: { pattern: ['XXX'] } },
         ),
       ).toEqual(true);
@@ -15,7 +15,7 @@ describe('isValidMove()', () => {
       expect(
         isValidMove(
           setup(),
-          { turn: 0 },
+          { turn: 1 },
           { cell: 1, tile: { pattern: ['XXX'] } },
         ),
       ).toEqual(false);
@@ -23,7 +23,7 @@ describe('isValidMove()', () => {
       expect(
         isValidMove(
           setup(),
-          { turn: 0 },
+          { turn: 1 },
           { cell: 0, tile: { pattern: [' XX'] } },
         ),
       ).toEqual(false);
@@ -33,7 +33,7 @@ describe('isValidMove()', () => {
       expect(
         isValidMove(
           setup(),
-          { turn: 1 },
+          { turn: 2 },
           { cell: 18, tile: { pattern: ['XX'] } },
         ),
       ).toEqual(true);
@@ -41,7 +41,7 @@ describe('isValidMove()', () => {
       expect(
         isValidMove(
           setup(),
-          { turn: 1 },
+          { turn: 2 },
           { cell: 18, tile: { pattern: ['X '] } },
         ),
       ).toEqual(false);
@@ -51,7 +51,7 @@ describe('isValidMove()', () => {
       expect(
         isValidMove(
           setup(),
-          { turn: 2 },
+          { turn: 3 },
           { cell: 398, tile: { pattern: ['XX'] } },
         ),
       ).toEqual(true);
@@ -59,7 +59,7 @@ describe('isValidMove()', () => {
       expect(
         isValidMove(
           setup(),
-          { turn: 2 },
+          { turn: 4 },
           { cell: 391, tile: { pattern: ['X '] } },
         ),
       ).toEqual(false);
@@ -69,7 +69,7 @@ describe('isValidMove()', () => {
       expect(
         isValidMove(
           setup(),
-          { turn: 3 },
+          { turn: 4 },
           { cell: 380, tile: { pattern: ['XX'] } },
         ),
       ).toEqual(true);
@@ -77,7 +77,7 @@ describe('isValidMove()', () => {
       expect(
         isValidMove(
           setup(),
-          { turn: 3 },
+          { turn: 4 },
           { cell: 380, tile: { pattern: [' X'] } },
         ),
       ).toEqual(false);
@@ -87,9 +87,9 @@ describe('isValidMove()', () => {
   describe('space availablity', () => {
     test('space available', () => {
       const G = setup();
-      G.cells[0] = '0';
+      G.cells[0] = '1';
       expect(
-        isValidMove(G, { turn: 4 }, { cell: 21, tile: { pattern: ['X'] } }),
+        isValidMove(G, { turn: 5 }, { cell: 21, tile: { pattern: ['X'] } }),
       ).toEqual(true);
     });
 
@@ -117,7 +117,7 @@ describe('isValidMove()', () => {
       expect(
         isValidMove(
           setup(),
-          { turn: 1 },
+          { turn: 2 },
           { cell: 19, tile: { pattern: ['XX'] } },
         ),
       ).toEqual(false);
@@ -127,7 +127,7 @@ describe('isValidMove()', () => {
       expect(
         isValidMove(
           setup(),
-          { turn: 2 },
+          { turn: 3 },
           { cell: 399, tile: { pattern: ['XX'] } },
         ),
       ).toEqual(false);
@@ -147,11 +147,11 @@ describe('isValidMove()', () => {
   describe('connectedness', () => {
     test('touches only diagonally', () => {
       const G = setup();
-      G.cells[0] = '0';
+      G.cells[0] = '1';
       expect(
         isValidMove(
           G,
-          { turn: 4 },
+          { turn: 5 },
           { cell: 1, tile: { pattern: [' X', 'XX'] } },
         ),
       ).toEqual(true);
@@ -162,7 +162,7 @@ describe('isValidMove()', () => {
       G.cells[0] = '0';
       G.cells[20] = '0';
       expect(
-        isValidMove(G, { turn: 4 }, { cell: 39, tile: { pattern: ['X'] } }),
+        isValidMove(G, { turn: 5 }, { cell: 39, tile: { pattern: ['X'] } }),
       ).toEqual(false);
     });
 
@@ -170,7 +170,7 @@ describe('isValidMove()', () => {
       const G = setup();
       G.cells[19] = '1';
       expect(
-        isValidMove(G, { turn: 5 }, { cell: 0, tile: { pattern: ['X'] } }),
+        isValidMove(G, { turn: 6 }, { cell: 0, tile: { pattern: ['X'] } }),
       ).toEqual(false);
     });
   });
@@ -179,15 +179,15 @@ describe('isValidMove()', () => {
 describe('fillCells()', () => {
   test('assigns pattern to cells', () => {
     const G = setup();
-    fillCells(G, { turn: 0 }, { cell: 0, tile: { pattern: ['XXX'] } });
-    expect(G.cells.slice(0, 3)).toEqual(['0', '0', '0']);
+    fillCells(G, { turn: 1 }, { cell: 0, tile: { pattern: ['XXX'] } });
+    expect(G.cells.slice(0, 3)).toEqual(['1', '1', '1']);
     expect(G.cells.slice(3)).not.toContain('0');
   });
 
   test('uses turn to select determine player', () => {
     const G = setup();
-    fillCells(G, { turn: 1 }, { cell: 0, tile: { pattern: ['XXX'] } });
-    expect(G.cells.slice(0, 3)).toEqual(['1', '1', '1']);
+    fillCells(G, { turn: 2 }, { cell: 0, tile: { pattern: ['XXX'] } });
+    expect(G.cells.slice(0, 3)).toEqual(['2', '2', '2']);
     expect(G.cells.slice(3)).not.toContain('1');
     expect(G.cells.slice(3)).not.toContain('0');
   });
