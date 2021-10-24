@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-distracting-elements */
 import React, { useEffect, useState } from 'react';
 import DraggableTile from './DraggableTile';
 import Tile from './Tile';
